@@ -1,0 +1,64 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+#can2 {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-wrapper {
+  position: absolute;
+  z-index: 10;
+}
+
+.hide {
+  display: none;
+}
+
+#confirmSelect {
+  cursor: pointer;
+  i {
+    margin-left: 15px;
+    display: inline-block;
+    width: 12px;
+    height: 20px;
+    border-bottom: 2px solid chartreuse;
+    border-right: 2px solid chartreuse;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+#cancelSelect {
+  cursor: pointer;
+  i {
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    background: brown;
+    line-height: 0;
+    font-size: 0;
+    vertical-align: middle;
+    -webkit-transform: rotate(45deg);
+    &:after {
+      content: "/";
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: brown;
+      -webkit-transform: rotate(-90deg);
+    }
+  }
+}

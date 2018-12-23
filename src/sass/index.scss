@@ -1,0 +1,147 @@
+@import "./common.scss";
+@import "./global.scss";
+@import "./components.scss";
+#app {
+  min-width: 600px;
+  height: 100px;
+  overflow: auto;
+  background: $green;
+  position: relative;
+}
+.recognizing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    color: #fff;
+  }
+}
+.wrapper1 {
+  text-align: right;
+  background: $green;
+  div {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+
+    .input {
+      width: 200px;
+    }
+  }
+  .button {
+    width: 100px;
+    color: #fff;
+    background: $lightGreen;
+    border-color: $lightGreen;
+  }
+}
+.sec1 {
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px;
+    background: $green;
+    label {
+      font-size: 16px;
+      color: #000;
+    }
+    input {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+}
+.sec2 {
+  header {
+    .operation {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px 30px;
+      background: $green;
+      & > div {
+        width: 107px;
+        height: 37px;
+        line-height: 37px;
+      }
+      button {
+        width: 107px;
+        line-height: 37px;
+        height: 37px;
+        text-align: center;
+        font-size: 14px;
+        border-radius: 5px;
+        background: $lightGreen;
+        color: #fff;
+        border: none;
+      }
+      .selected-info {
+        width: 120px;
+        color: #fff;
+      }
+    }
+  }
+  main {
+    padding: 20px;
+    background: $darkGreen;
+    .item {
+      display: flex;
+      padding: 20px 42px 34px 0;
+      box-shadow: 0 0 5px #000;
+      background: $green;
+      .selection {
+        display: flex;
+        width: 113px;
+        align-items: center;
+        justify-content: center;
+      }
+      .info {
+        width: 100%;
+        box-shadow: 0 0 10px #000;
+        .sec1 {
+          width: 100%;
+          height: 160px;
+          .index {
+            display: inline-block;
+            width: 70px;
+            line-height: 31px;
+            color: #fff;
+            text-align: center;
+            background: $lightGreen;
+          }
+        }
+        .sec2,
+        .sec3,
+        .sec4,
+        .sec5 {
+          padding: 20px;
+          border-bottom: 1px solid #000;
+        }
+        h3 {
+          margin-bottom: 5px;
+          font-size: 18px;
+          color: #fff;
+        }
+        .context {
+          display: flex;
+          flex-wrap: wrap;
+          div {
+            min-width: 50%;
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.8;
+          }
+        }
+      }
+    }
+  }
+}

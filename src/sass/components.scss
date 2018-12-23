@@ -1,0 +1,121 @@
+@import "./global.scss";
+.comp-btn {
+  position: relative;
+  font-size: 14px;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+  .content {
+    width: 107px;
+    color: #189e99;
+    line-height: 37px;
+    border: 1px solid #189e99;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+  }
+  ul {
+    display: none;
+  }
+  &.is-active {
+    ul {
+      display: block;
+      margin: 0;
+      width: 100%;
+      padding: 0;
+      position: absolute;
+      li {
+        color: #fff;
+        list-style: none;
+        border: 1px solid #189e99;
+        border-top: none;
+        background: $green;
+        &:hover {
+          color: #000;
+          background: $lightGreen;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+//components
+.comp-check {
+  font-size: 0;
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 2px;
+    border: 2px solid #c3c2c2;
+    cursor: pointer;
+    &.checked {
+      &:before {
+        content: "";
+        border: 2px solid #c3c2c2;
+        border-left: 0;
+        border-top: 0;
+        width: 5px;
+        height: 12px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+.comp-select {
+  position: relative;
+  color: $lightGreen;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid $lightGreen;
+  font-size: 14px;
+  cursor: pointer;
+  .wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .icons {
+    margin-left: 5px;
+    height: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &.both {
+    }
+    &.pos {
+      .up {
+        transform: translateY(-2px);
+      }
+      .down {
+        display: none;
+      }
+    }
+    &.neg {
+      .up {
+        display: none;
+      }
+      .down {
+        transform: translateY(2px) rotate(180deg);
+      }
+    }
+    i {
+      display: inline-block;
+      margin-top: 1px;
+      margin-bottom: 1px;
+      width: 0;
+      height: 0;
+      border: 3px solid $lightGreen;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+    }
+    .down {
+      transform: rotate(180deg);
+      transform-origin: center;
+    }
+  }
+}

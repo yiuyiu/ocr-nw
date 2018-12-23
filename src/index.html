@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/bulma.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="./assets/vue.js"></script>
+    <script src="./assets/axios.js"></script>
+    <script src="./assets/tesseract/tesseract.1.0.10.js"></script>
+    <title>初始页</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="recognizing" v-if="recognizing"><p>识别中...</p></div>
+      <div class="wrapper1" v-if="!isLogined">
+        <div>
+          <input
+            type="text"
+            class="input"
+            placeholder="请输入账户名"
+            v-model="username"
+          />
+          <input
+            type="password"
+            class="input"
+            placeholder="请输入密码"
+            v-model="password"
+          />
+          <a class="button" @click="login">登录</a>
+        </div>
+      </div>
+      <div class="wrapper2" v-if="isLogined" :class="{'has-result':hasResult}">
+        <div class="sec1">
+          <div class="content">
+            <!-- <label>标示编号</label> -->
+            <input
+              class="input"
+              v-model="result"
+              type="text"
+              placeholder="选中指定字符，以Enter键结束操作"
+              @keyup.enter="setList(result)"
+            />
+          </div>
+        </div>
+        <!-- toggle -->
+        <div class="sec2" v-show="hasResult">
+          <header>
+            <div class="operation">
+              <div class="btn-context"><button>复制报告</button></div>
+              <div class="btn-context">
+                <select-box
+                  name="结节概率"
+                  type="pro"
+                  @change="listSort($event)"
+                  class="pro"
+                  :sort="sortBy=='pro'?sort:0"
+                ></select-box>
+              </div>
+              <div class="btn-context">
+                <select-box
+                  name="恶性概率"
+                  type="mali"
+                  @change="listSort($event)"
+                  class="mali"
+                  :sort="sortBy=='mali'?sort:0"
+                ></select-box>
+              </div>
+              <div class="selected-info">
+                选中结节：<span class="selected">{{ selectedList.length }}</span
+                >/<span class="totalNum">{{ list.length }}</span>
+              </div>
+            </div>
+          </header>
+          <main>
+            <ul>
+              <li class="item" v-for="(item,index) of list">
+                <div class="selection">
+                  <check-box
+                    :checked="item.checked"
+                    @change="handleSelected($event,item)"
+                  ></check-box>
+                </div>
+                <div class="info">
+                  <div class="img sec1">
+                    <span class="index">结节{{ index + 1 }}</span>
+                  </div>
+                  <div class="sec2">
+                    <div class="btn-wrapper"></div>
+                    <drop-down></drop-down>
+                  </div>
+                  <div class="sec3 nodule-info">
+                    <h3>结节信息</h3>
+                    <div class="context">
+                      <div>
+                        <span class="field">结节概率：</span>
+                        <span class="value"
+                          >{{
+                            item.lesion.probability | toPercent | toDecimal
+                          }}%</span
+                        >
+                      </div>
+                      <div>
+                        <span class="field">结节大小(长径*短径)：</span>
+                        <span class="value">{{
+                          item.lesion.diameter.replace("*", "/")
+                        }}</span>
+                      </div>
+                      <div>
+                        <span class="field">结节体积：</span>
+                        <span class="value"
+                          >{{ item.lesion.nodule_size }}mm³</span
+                        >
+                      </div>
+                      <div>
+                        <span class="field">标准直径：</span>
+                        <span class="value"
+                          >{{ item.lesion.diameter_norm | toDecimal }}mm</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sec4 density-info">
+                    <h3>密度信息</h3>
+                    <div class="context">
+                      <div>
+                        <span class="field">中心密度：</span>
+                        <span class="value">{{ item.lesion.center_hu }}HU</span>
+                      </div>
+                      <div>
+                        <span class="field">平均密度：</span>
+                        <span class="value"
+                          >{{item.lesion.mean_hu|toDecimal(2)}}HU</span
+                        >
+                      </div>
+                      <div>
+                        <span class="field">最大密度：</span>
+                        <span class="value">{{ item.lesion.max_hu }}HU</span>
+                      </div>
+                      <div>
+                        <span class="field">最小密度：</span>
+                        <span class="value">{{ item.lesion.min_hu }}HU</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sec5 mali-info">
+                    <h3>恶性风险概率</h3>
+                    <div class="context">
+                      <div>
+                        <span class="field">恶性风险：</span>
+                        <span class="value"
+                          >{{
+                            item.lesion.maligant | toPercent | toDecimal
+                          }}%</span
+                        >
+                      </div>
+                      <div>
+                        <span class="field">疑似类型：</span>
+                        <span class="value">{{
+                          item.lesion.invision_classify
+                        }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </main>
+        </div>
+      </div>
+    </div>
+    <script type="x-template" id="checkbox">
+      <div class="comp-check">
+          <label @click="toggle" :class="{checked:checked}">
+          </label>
+      </div>
+    </script>
+    <script type="x-template" id="dropdown">
+      <div class="comp-btn" tabindex="-1" @blur="closeMenu" :class="{'is-active':actived}">
+          <div class="content" @click="openMenu">{{field}}</div>
+          <ul>
+              <li v-for="item of items" @click="selectItem($event,item)">{{item}}</li>
+          </ul>
+      </div>
+    </script>
+    <!-- 组件有三种状态 -->
+    <!-- sort 0 无排序 -->
+    <!-- sort 1 正序 -->
+    <!-- sort -1 倒序 -->
+    <script type="x-template" id="selectbox">
+      <div class="comp-select" @click="change">
+          <div class='wrap'>
+              <span>{{name}}</span>
+              <div class='icons' :class="{both:sort==0,pos:sort==1,neg:sort==-1}">
+                  <i class='up'></i>
+                  <i class='down'></i>
+              </div>
+          </div>
+
+      </div>
+    </script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

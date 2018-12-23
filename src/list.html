@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/list.css">
+    <script src='./js/vue.js'></script>
+    <title>列表页</title>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="content">
+                <!-- <label>标示编号</label> -->
+                <input type="text">
+            </div>
+            <div class="operation">
+                <div class="btn-context">
+                    <button>复制报告</button>
+                </div>
+                <div class="btn-context">
+                    <drop-down field="haha" :items="['nihao','haha']"></drop-down>
+                </div>
+                <div class="btn-context">
+                    <button>恶性风险</button>
+                </div>
+                <div class="selected-info">
+                    选中结节：<span class="selected">{{selectedList.length}}</span>/<span class="totalNum">{{list.length}}</span>
+                </div>
+            </div>
+        </header>
+        <main v-if='hasResult'>
+            <ul>
+                <li class="item">
+                    <div class="selection">
+                        <check-box @change="handleSelected($event)"></check-box>
+                    </div>
+                    <div class="info">
+                        <div class="img sec1">
+                            <span class="index">结节</span>
+                        </div>
+                        <div class="sec2">
+                            <div class="btn-wrapper"></div>
+                            <drop-down></drop-down>
+                        </div>
+                        <div class="sec3 nodule-info">
+                            <h3>结节信息</h3>
+                            <div class="context">
+                                <div><span class="field">结节概率：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">结节大小(长径*短径)：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">结节位置：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">结节体积：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">标准直径：</span>
+                                    <span class="value"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sec4 density-info">
+                            <h3>密度信息</h3>
+                            <div class="context">
+                                <div>
+                                    <span class="field">中心密度：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">平均密度：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">最大密度：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">最小密度：</span>
+                                    <span class="value"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sec5 mali-info">
+                            <h3>恶性风险概率</h3>
+                            <div class="context">
+                                <div>
+                                    <span class="field">恶性风险：</span>
+                                    <span class="value"></span>
+                                </div>
+                                <div>
+                                    <span class="field">疑似类型：</span>
+                                    <span class="value"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </main>
+    </div>
+    <script type="x-template" id='checkbox'>
+        <div class="comp-check">
+            <label @click="toggle" :class="{checked:checked}">
+            </label>
+        </div>        
+    </script>
+    <script type="x-template" id='dropdown'>
+        <div class="comp-btn" tabindex="-1" @blur="closeMenu" :class="{'is-active':actived}">
+            <div class="content" @click="openMenu">{{field}}</div>
+            <ul>
+                <li v-for="item of items" @click="selectItem($event,item)">{{item}}</li>
+            </ul>
+        </div>   
+    </script>
+    <script src='./js/list.js'></script>
+</body>
+
+
+</html>
