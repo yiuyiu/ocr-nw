@@ -7,7 +7,7 @@
     "toolbar": true,
     "frame": true,
     "width": 600,
-    "height": 90,
+    "height": 96,
     "icon": "dist/assets/img/icon.png"
   },
   "dependencies": {

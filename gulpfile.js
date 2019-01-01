@@ -13,6 +13,7 @@ var gulp = require("gulp"),
   browserSync = require("browser-sync").create(),
   reload = browserSync.reload;
 var exec = require("child_process").exec;
+const path = require('path');
 // 配置了sass,自动添加前缀,重命名添加min后缀,压缩css
 gulp.task("css", function() {
   gulp
@@ -73,7 +74,8 @@ gulp.task("serve", ["clean"], function() {
 // })
 gulp.task("default", ["serve"]);
 // nwBuilder
-var depends = Object.keys(info.dependencies).join(",");
+var depends = require('./depends').depends;
+
 gulp.task("build", ["css", "html", "js"], cb => {
   var nw = new nwBuilder({
     files: "./{package.json,dist/**,node_modules/{" + depends + "}/**}", // use the glob format
@@ -87,11 +89,11 @@ gulp.task("build", ["css", "html", "js"], cb => {
 gulp.task("run", ["css", "html", "js"], cb => {
   var nw = new nwBuilder({
     files: "./{package.json,dist/**,node_modules/{" + depends + "}/**}", // use the glob format
-    platforms: ["osx64"],
+    platforms: ["win64"],
     version: "0.14.7"
   });
   nw.build().then(() => {
-    exec("./build/ocr/osx64/ocr.app/Contents/MacOS/nwjs");
+    exec(path.join(__dirname,'./build/ocr/win64/ocr.exe'));
   });
 });
 gulp.task("release", ["build"], function() {

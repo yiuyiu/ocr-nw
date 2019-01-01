@@ -38,11 +38,11 @@ axios.interceptors.response.use(
 // initTesseract
 window.Tesseract = Tesseract.create({
   workerPath:
-    "file://" + path.join(global.__dirname, "dist/assets/tesseract/worker.js"),
+    "file:///" + path.join(global.__dirname, "dist/assets/tesseract/worker.js").replace(/\\/g,"/"),
   langPath:
-    "file://" + path.join(global.__dirname, "dist/assets/tesseract/langs/"),
+    "file:///" + path.join(global.__dirname, "dist/assets/tesseract/langs/").replace(/\\/g,"/"),
   corePath:
-    "file://" + path.join(global.__dirname, "dist/assets/tesseract/index.js")
+    "file:///" + path.join(global.__dirname, "dist/assets/tesseract/index.js").replace(/\\/g,"/")
 });
 // componnents register
 const DropDown = Vue.component("drop-down", {
